@@ -5,11 +5,17 @@ public class Agent : MonoBehaviour {
 
     private static float WALK_BOUNDS = 4f;
     private static float WALK_SPEED = 1f;
+    private static int idCounter = 0;
+    public AgentState state { get; private set; }
+
+    public int id { get; private set; }
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(BehaviourCycle());
+        id = idCounter++;
+        state = new AgentState(Random.Range(-1f, 1f));
         AgentProximityDetector.inst.Add(this);
-	}
+        StartCoroutine(BehaviourCycle());
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,5 +50,6 @@ public class Agent : MonoBehaviour {
     public void InteractWith(Agent other)
     {
         Debug.Log(name + " talks to " + other.name);
+        
     }
 }
