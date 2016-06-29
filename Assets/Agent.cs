@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+public class AgentPair
+{
+    public Agent a { get; set; }
+    public Agent b { get; set; }
+}
 
 public class Agent : MonoBehaviour {
 
@@ -50,6 +55,10 @@ public class Agent : MonoBehaviour {
     public void InteractWith(Agent other)
     {
         Debug.Log(name + " talks to " + other.name);
-        
+        SendMessageUpwards("OnAgentInteract", new AgentPair
+        {
+            a = this,
+            b = other
+        });
     }
 }
