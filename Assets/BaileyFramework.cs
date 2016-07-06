@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BaileyFramework : MonoBehaviour {
     public bool changeAgentColor = false;
-    private Bailey bailey;
+    public Bailey bailey;
     private GameObject lineRendererContainer;
 	// Use this for initialization
 	void Start () {

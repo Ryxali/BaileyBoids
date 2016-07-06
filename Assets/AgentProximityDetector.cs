@@ -8,6 +8,7 @@ public class AgentProximityDetector : MonoBehaviour {
     public static AgentProximityDetector inst { get { if (_inst == null) Debug.LogError("No instance of singleton exists"); return _inst; } }
     private List<Agent> agents;
     private List<AgentDetection> collisions = new List<AgentDetection>();
+    public float agentRadius = 3f;
 
     private class AgentDetection
     {
@@ -33,7 +34,7 @@ public class AgentProximityDetector : MonoBehaviour {
         var coll = new List<AgentDetection>();
         foreach(var agent in agents)
         {
-            var colliding = agents.FindAll(x => x != agent && Vector3.Distance(agent.transform.position, x.transform.position) < 5f);
+            var colliding = agents.FindAll(x => x != agent && Vector3.Distance(agent.transform.position, x.transform.position) < agentRadius);
             var newCollisions = colliding.FindAll(x => !coll.Exists(z => z.Contains(x) && z.Contains(agent)));
             foreach (var val in newCollisions)
             {

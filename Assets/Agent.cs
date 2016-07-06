@@ -18,6 +18,7 @@ public class Agent : MonoBehaviour {
 	void Start () {
         id = idCounter++;
         state = new AgentState(Random.Range(-1f, 1f));
+        GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.black, Color.blue, (state.opinion + 1f) / 2f);
         AgentProximityDetector.inst.Add(this);
         StartCoroutine(BehaviourCycle());
     }

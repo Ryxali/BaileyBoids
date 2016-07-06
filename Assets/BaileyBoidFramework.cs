@@ -4,7 +4,7 @@ using System.Collections;
 
 public class BaileyBoidFramework : MonoBehaviour {
     public bool changeAgentColor = false;
-    private BaileyBoid baileyBoid;
+    public BaileyBoid baileyBoid;
     private GameObject lineRendererContainer;
     // Use this for initialization
     void Start () {

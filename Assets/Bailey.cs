@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Bailey {
 
-    protected RelationTracker tracker;
+    public RelationTracker tracker;
     private static readonly float AGREEMENT_DELTA_MOD = 0.2f;
 
     public Bailey(GameObject host)
@@ -18,6 +18,7 @@ public class Bailey {
         var relation = tracker.relations.Find(x => x.Contains(a, b));
         float agreement = 1f - Mathf.Abs(a.state.opinion - b.state.opinion);
         relation.relation += agreement * AGREEMENT_DELTA_MOD;
+        relation.relation = Mathf.Clamp(relation.relation, -1f, 1f);
     }
 
     public void UpdateLineRenderers()
