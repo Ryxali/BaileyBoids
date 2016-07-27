@@ -17,7 +17,7 @@ public class BaileyFramework : MonoBehaviour {
         
         
     }
-
+    
     void LateUpdate()
     {
         bailey.UpdateLineRenderers();

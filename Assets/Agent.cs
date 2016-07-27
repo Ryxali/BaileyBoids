@@ -9,15 +9,24 @@ public class AgentPair
 public class Agent : MonoBehaviour {
 
     private static float WALK_BOUNDS = 4f;
-    private static float WALK_SPEED = 1f;
+    private static float WALK_SPEED = 5f;
     private static int idCounter = 0;
     public AgentState state { get; private set; }
 
+    public float agentState {  get { return state.opinion; } set { state.opinion = value; } }
+
     public int id { get; private set; }
+
+    public Agent ()
+    {
+        id = idCounter++;
+        
+    }
+
 	// Use this for initialization
 	void Start () {
-        id = idCounter++;
         state = new AgentState(Random.Range(-1f, 1f));
+        name += " (" + ((decimal)state.opinion).ToString("F") + ")"; 
         GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.black, Color.blue, (state.opinion + 1f) / 2f);
         AgentProximityDetector.inst.Add(this);
         StartCoroutine(BehaviourCycle());
@@ -48,6 +57,8 @@ public class Agent : MonoBehaviour {
         while(Vector3.Distance(transform.position, point) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, point, Time.deltaTime * WALK_SPEED);
+            //transform.rotation = Quaternion.LookRotation()
+            transform.up = (point - transform.position).normalized;
             yield return null;
         }
     }
@@ -55,7 +66,7 @@ public class Agent : MonoBehaviour {
 
     public void InteractWith(Agent other)
     {
-        Debug.Log(name + " talks to " + other.name);
+        //Debug.Log(name + " talks to " + other.name);
         SendMessageUpwards("OnAgentInteract", new AgentPair
         {
             a = this,

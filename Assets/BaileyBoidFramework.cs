@@ -20,6 +20,11 @@ public class BaileyBoidFramework : MonoBehaviour {
         
     }
 
+    void FixedUpdate()
+    {
+        baileyBoid.FixedUpdate();
+    }
+
     void LateUpdate()
     {
         baileyBoid.UpdateLineRenderers();

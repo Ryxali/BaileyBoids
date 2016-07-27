@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AgentState {
 
-	public float opinion { get; private set; }
+	public float opinion { get; set; }
     
     public AgentState(float opinion)
     {

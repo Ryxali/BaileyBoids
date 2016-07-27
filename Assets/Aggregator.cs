@@ -22,7 +22,7 @@ public class Aggregator : MonoBehaviour {
     {
         public string identifier
         {
-            get; set;
+            get { return baileyRelation.a.name + "-" + baileyRelation.b.name; }
         }
         public RelationTracker.AgentRelation baileyRelation { get; set; }
         public RelationTracker.AgentRelation boidBaileyRelation { get; set; }
@@ -41,12 +41,11 @@ public class Aggregator : MonoBehaviour {
         relations = new List<RelationPair>();
         foreach(var v in bailey.tracker.relations)
         {
-            var match = baileyBoid.tracker.relations.Find(x => x.Contains(v.a, v.b));
+            var match = baileyBoid.tracker.relations.Find(x => x.a == v.a && x.b == v.b);
             relations.Add(new RelationPair
             {
                 baileyRelation = v,
-                boidBaileyRelation = match,
-                identifier = v.a.name + "-" + v.b.name
+                boidBaileyRelation = match
             });
         }
     }
@@ -54,10 +53,12 @@ public class Aggregator : MonoBehaviour {
 	IEnumerator DataCollector()
     {
         dataPoints = new List<DataPoint>();
-        float startTime = Time.time;
+        float startTime = 0f;
         float counter = 0f;
-        while(Time.time - startTime < collectionTime)
+        while(counter <= collectionTime)
         {
+            
+            
             float[] bData = new float[relations.Count];
             float[] bbData = new float[relations.Count];
             for (int i = 0; i < relations.Count; i++)
@@ -71,8 +72,13 @@ public class Aggregator : MonoBehaviour {
                 boidBaileyData = bbData,
                 time = counter
             });
-            yield return new WaitForSeconds(0.5f);
             counter += 0.5f;
+            while (startTime < counter)
+            {
+                startTime += Time.deltaTime;
+                yield return null;
+            }
+            Debug.Log("TICK");
         }
 
         string agentConcat = "Time";
