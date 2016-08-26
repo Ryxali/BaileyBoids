@@ -49,4 +49,26 @@ public class RelationTracker {
             }
         }
     }
+
+    public void Initialize(RelationTracker tracker, GameObject host)
+    {
+        relations = new List<AgentRelation>();
+        foreach(var relation in tracker.relations)
+        {
+            GameObject go = new GameObject();
+            go.transform.parent = host.transform;
+            var rend = go.AddComponent<LineRenderer>();
+            rend.SetWidth(0.05f, 0.05f);
+            rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            rend.receiveShadows = false;
+            rend.material = new Material(Shader.Find("Sprites/Default"));
+            relations.Add(new AgentRelation
+            {
+                a = relation.a,
+                b = relation.b,
+                relation = relation.relation,
+                renderer = rend
+            });
+        }
+    }
 }

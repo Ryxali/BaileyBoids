@@ -10,7 +10,7 @@ public class Bailey {
     public Bailey(GameObject host)
     {
         tracker = new RelationTracker();
-        tracker.Initialize(Object.FindObjectsOfType<Agent>(), host);
+        //tracker.Initialize(Object.FindObjectsOfType<Agent>(), host);
     }
 
     public virtual void OnInteract(Agent a, Agent b)

@@ -8,10 +8,15 @@ public class BaileyBoidFramework : MonoBehaviour {
     private GameObject lineRendererContainer;
     // Use this for initialization
     void Start () {
-        lineRendererContainer = new GameObject(name + " : LR Container");
-        baileyBoid = new BaileyBoid(lineRendererContainer);
+        
 	}
 	
+    public void Initialize(RelationTracker tracker)
+    {
+        lineRendererContainer = new GameObject(name + " : LR Container");
+        baileyBoid = new BaileyBoid(lineRendererContainer);
+        baileyBoid.tracker.Initialize(tracker, lineRendererContainer);
+    }
    
 
 	void OnAgentInteract(AgentPair agents)

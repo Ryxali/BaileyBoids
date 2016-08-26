@@ -36,13 +36,14 @@ public class BaileyBoid : Bailey {
             {
                 //Debug.Log("Avg: " + rel.a.name + " -> " + rel.b.name);
                 average += rel.relation;
-                if(tracker.relations.Find(y => y.a == agent && y.b == rel.a).relation >= 0)
+                var relVal = tracker.relations.Find(y => y.a == agent && y.b == rel.a).relation;
+                if (relVal > 0)
                 {
                     //Debug.Log("\tConsidered Positive");
                     
-                    likedAverage += rel.relation;
+                    likedAverage +=  rel.relation;
                     nLiked++;
-                } else
+                } else if( relVal < 0)
                 {
                     //Debug.Log("\tConsidered Negative");
                     dislikedAverage += rel.relation;
@@ -57,7 +58,7 @@ public class BaileyBoid : Bailey {
             float force =
                 average - relation.relation
                 +(nLiked != 0f ? likedAverage - relation.relation : 0f)
-                + (nDisliked != 0f ? dislikedAverage - relation.relation : 0f)
+                - ((nDisliked != 0f ? dislikedAverage - relation.relation : 0f))
                 ;
 
             relation.relation += force * Time.fixedDeltaTime * RELATION_DELTA_MOD;

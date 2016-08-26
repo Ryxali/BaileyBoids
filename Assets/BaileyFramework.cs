@@ -9,6 +9,8 @@ public class BaileyFramework : MonoBehaviour {
 	void Start () {
         lineRendererContainer = new GameObject(name + " : LR Container");
         bailey = new Bailey(lineRendererContainer);
+        bailey.tracker.Initialize(FindObjectsOfType<Agent>(), lineRendererContainer);
+        GetComponent<BaileyBoidFramework>().Initialize(bailey.tracker);
 	}
 
     void OnAgentInteract(AgentPair agents)
