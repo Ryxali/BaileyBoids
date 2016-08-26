@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class Spawner : MonoBehaviour {
-    public int nAgents;
+    //public int nAgents;
     public Sprite sprite;
     public float size;
 	// Use this for initialization
 	void Start () {
-        for (int i = 0; i < nAgents; i++)
+        for (int i = 0; i < Evaluator.AgentsToSimulate; i++)
         {
             var obj = new GameObject("Agent " + i);
             obj.AddComponent<Agent>();

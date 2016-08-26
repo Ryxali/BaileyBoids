@@ -67,7 +67,6 @@ public class BaileyBoid : Bailey {
         
             //var dislikedRelations = agentRelations.FindAll(x => !likedRelations.Contains(x));
         }
-        Debug.Log("[][][][][][][][][][][]");
     }
 
     private void Boidy(Agent agent, Agent affector, float agreement)
