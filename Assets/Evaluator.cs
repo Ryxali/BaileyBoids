@@ -50,16 +50,16 @@ public class Evaluator : MonoBehaviour {
             });
             Debug.Log("EX: " + currentAgentToSimulate + "-" + executions + "(" + Time.time + ")");
             executions++;
-            if (executions >= 5)
+            if (executions >= 1000)
             {
                 
                 var baileyRes = ProduceAggregate(executionResults.ConvertAll<ExecutionResult>(x => x.bailey));
                 var boidRes = ProduceAggregate(executionResults.ConvertAll<ExecutionResult>(x => x.baileyBoid));
                 string[] strings = new[]
                 {
-                    "type,lowest,highest,median,low avg.,mid low avg,high avg,mid high avg,total",
-                    "individual"+baileyRes.lowest + "," + baileyRes.highest + "," + baileyRes.median + "," + baileyRes.lowAvg + "," + baileyRes.midLowAvg + "," + baileyRes.midHighAvg + "," + baileyRes.highAvg + "," + baileyRes.total,
-                    "collective"+boidRes.lowest + "," + boidRes.highest + "," + boidRes.median + "," + boidRes.lowAvg + "," + boidRes.midLowAvg + "," + boidRes.midHighAvg + "," + boidRes.highAvg + "," + boidRes.total
+                    "type,lowest,highest,median,low avg.,mid low avg,mid high avg,high avg,total failed,total",
+                    "individual,"+baileyRes.lowest + "," + baileyRes.highest + "," + baileyRes.median + "," + baileyRes.lowAvg + "," + baileyRes.midLowAvg + "," + baileyRes.midHighAvg + "," + baileyRes.highAvg + "," + baileyRes.nFailed + "," + baileyRes.total,
+                    "collective,"+boidRes.lowest + "," + boidRes.highest + "," + boidRes.median + "," + boidRes.lowAvg + "," + boidRes.midLowAvg + "," + boidRes.midHighAvg + "," + boidRes.highAvg + "," + boidRes.nFailed + "," + boidRes.total
                 };
                 System.IO.File.WriteAllLines(Application.persistentDataPath + "/result (" + AgentsToSimulate + ") " + System.DateTime.Now.ToString("[MM-dd] hh-mm-ss")+".csv", strings);
                 // TODO store total data and clear shit
@@ -90,7 +90,7 @@ public class Evaluator : MonoBehaviour {
 
     private class AggregationResult
     {
-        public int total, median, lowest, highest;
+        public int total, nFailed, median, lowest, highest;
         public float lowAvg, midLowAvg, midHighAvg, highAvg;
     }
 
@@ -142,6 +142,7 @@ public class Evaluator : MonoBehaviour {
         return new AggregationResult
         {
             total = executions,
+            nFailed = results.FindAll(x => x.nFailed > 0).Count,
             lowest = lowest,
             median = median,
             highest = highest,
